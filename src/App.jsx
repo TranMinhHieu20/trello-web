@@ -8,7 +8,6 @@ function App() {
     <>
       <div>MinhHieu</div>
       <Button variant="contained">Hello world</Button>
-      <span className="material-icons-outlined">search</span>
       <AccessAlarmIcon />
       <HomeIcon />
       <HomeIcon color="primary" />
