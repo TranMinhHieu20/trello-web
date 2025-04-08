@@ -1,5 +1,5 @@
-import ModeSelect from '../ModeSelect'
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
+import ModeSelect from '~/components/ModeSelect/'
 
 function AppBar() {
   return (
