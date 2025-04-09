@@ -1,6 +1,5 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 import { cyan, deepOrange, orange, teal } from '@mui/material/colors'
-import { BorderColor } from '@mui/icons-material'
 
 // Create a theme instance.
 const theme = extendTheme({
@@ -67,11 +66,21 @@ const theme = extendTheme({
         })
       }
     },
-    MuiSvgIcon: {
+    MuiCssBaseline: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          // color: theme.palette.primary.main
-        })
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px'
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#ccc',
+            borderRadius: '8px'
+          },
+          '*::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#999'
+          }
+        }
       }
     }
   }
