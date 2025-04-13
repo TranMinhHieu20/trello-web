@@ -16,10 +16,11 @@ import Cloud from '@mui/icons-material/Cloud'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
+import { mapOrder } from '~/utils/sorts'
 
 import ListCards from './ListCards/ListCards'
 
-function Columns() {
+function Columns({ column }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -28,6 +29,9 @@ function Columns() {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+
   return (
     // Box Columns
     <Box
@@ -58,7 +62,7 @@ function Columns() {
           variant="h6"
           sx={{ fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem' }}
         >
-          Column Title
+          {column?.title}
         </Typography>
         {/* DownIcon */}
         <Box>
@@ -130,7 +134,7 @@ function Columns() {
         {/*  */}
       </Box>
       {/* ListCards */}
-      <ListCards />
+      <ListCards cards={orderedCards} />
       {/* Footer */}
       <Box
         sx={{
