@@ -17,10 +17,22 @@ import Tooltip from '@mui/material/Tooltip'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
 import { mapOrder } from '~/utils/sorts'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 import ListCards from './ListCards/ListCards'
 
 function Columns({ column }) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: column._id, data: { ...column } })
+
+  const dndKitColumnStyles = {
+    // touchAction: 'none', // danh cho sensor default dang PointerSensor
+    // tranh bi stretch
+    transform: CSS.Translate.toString(transform),
+    transition
+  }
+
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -35,6 +47,10 @@ function Columns({ column }) {
   return (
     // Box Columns
     <Box
+      ref={setNodeRef}
+      style={dndKitColumnStyles}
+      {...attributes}
+      {...listeners}
       sx={{
         minWidth: '300px',
         maxWidth: '300px',
