@@ -11,7 +11,8 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-  defaultDropAnimationSideEffects
+  defaultDropAnimationSideEffects,
+  closestCorners
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import Column from './ListColumns/Column/Column'
@@ -91,8 +92,8 @@ function BoardContent({ board }) {
     // tim 2 column theo cardId
     const activeColumn = findColumnByCardId(activeDraggingCardId)
     const overColumn = findColumnByCardId(overCardId)
-    console.log('activeColumn: ', activeColumn)
-    console.log('overColumn: ', overColumn)
+    // console.log('activeColumn: ', activeColumn)
+    // console.log('overColumn: ', overColumn)
 
     if (!activeColumn || !overColumn) return
 
@@ -101,7 +102,7 @@ function BoardContent({ board }) {
       setOrderedColumns((prevColumns) => {
         // tìm vị trí (index) của cái overCard trong column đích (nơi mà activeCard sắp được thả)
         const overCardIndex = overColumn?.cards?.findIndex((card) => card._id === overCardId)
-        console.log('overCardIndex: ', overCardIndex)
+        // console.log('overCardIndex: ', overCardIndex)
 
         let newCardIndex
         const isBelowOverItem =
@@ -110,9 +111,9 @@ function BoardContent({ board }) {
         const modifier = isBelowOverItem ? 1 : 0
 
         newCardIndex = overCardIndex >= 0 ? overCardIndex + modifier : overColumn?.cards?.length + 1
-        console.log('isBelowOverItem: ', isBelowOverItem)
-        console.log('newCardIndex: ', newCardIndex)
-        console.log('modifier: ', modifier)
+        // console.log('isBelowOverItem: ', isBelowOverItem)
+        // console.log('newCardIndex: ', newCardIndex)
+        // console.log('modifier: ', modifier)
         const nextColumns = cloneDeep(prevColumns)
         const nextActiveColumn = nextColumns.find((column) => column?._id === activeColumn?._id)
         const nextOverColumn = nextColumns.find((column) => column?._id === overColumn?._id)
@@ -181,7 +182,13 @@ function BoardContent({ board }) {
   }
 
   return (
-    <DndContext sensors={sensors} onDragStart={handleDragStart} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
+    <DndContext
+      collisionDetection={closestCorners}
+      sensors={sensors}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+    >
       <Box
         sx={{
           bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
